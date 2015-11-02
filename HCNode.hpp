@@ -42,7 +42,9 @@ ostream& operator<<(ostream& stm, const HCNode& n) {
     return stm;
 }
 
+
 bool comp(HCNode* one, HCNode* other);
+
 
 
 #endif // HCNODE_HPP

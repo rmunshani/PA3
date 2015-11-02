@@ -28,8 +28,25 @@ public:
  */
 class HCTree {
 private:
+
     HCNode* root;
     vector<HCNode*> leaves;
+    
+    static void deleteAll(HCNode* curr){
+        if(curr == 0){
+            return;
+        }
+
+        if(curr->c0 != 0){
+            deleteAll(curr->c0);
+        }
+
+        if(curr->c1 != 0){
+            deleteAll(curr ->c1);
+        }
+        delete curr;
+    }
+
 
 public:
     explicit HCTree() : root(0) {

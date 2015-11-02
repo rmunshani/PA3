@@ -1,8 +1,12 @@
 #include "HCTree.hpp"
+<<<<<<< HEAD
 #include "BitOutputStream.hpp"
 #include <queue>
 #include <stack>
 
+=======
+#include <queue>
+>>>>>>> origin/master
 using namespace std;
 
 HCTree::~HCTree(){
@@ -47,6 +51,7 @@ void HCTree::build(const vector<int>& freqs){
 	} 
 }
 
+<<<<<<< HEAD
 
 void encode(byte symbol, BitOutputStream& out) const{
 
@@ -171,3 +176,8 @@ int decode(ifstream& in) const{
 
 
 
+=======
+void HCTree::encode(byte symbol, BitOutputStream& out) const{
+
+}
+>>>>>>> origin/master

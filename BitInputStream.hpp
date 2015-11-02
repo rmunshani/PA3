@@ -11,6 +11,12 @@ private:
     char buf;     // the buffer of bits
     int buf_index;     // index to access buf
 
+    //fill the bit when reach 8 
+    void fill(){
+      buf = in.get();
+      buf_index = 0;
+    }
+
 public:
   // constructor
   BitInputStream(istream& s) : in(s), buf(0), buf_index(8) { }
@@ -23,6 +29,8 @@ public:
 
   // read next int, used for decoding header
   int readInt();
+
 };
+
 
 #endif

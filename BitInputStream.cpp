@@ -2,11 +2,18 @@
 //using namespace std;
 
 int BitInputStream::readBit(){
+
 	if(in.eof()){ //use good or eof? 
+		cout << "reach end of file" << endl;
 		return -1;
 	}
 
-	if(this->buf_index == 8){
+	if(!in.good()){
+		cout << "error occur when read bit from the file" << endl;
+		return -1;
+	}
+
+	if(buf_index == 8){
 		fill();
 	}
 
@@ -16,6 +23,12 @@ int BitInputStream::readBit(){
 }
 
 int BitInputStream::readByte(){
+
+	if(!in.good()){
+		cout << "error occur when read bit from the file" << endl;
+		return -1;
+	}
+
 	return in.get();
 }
 

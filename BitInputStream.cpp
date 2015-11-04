@@ -1,12 +1,15 @@
 #include "BitInputStream.hpp"
-//using namespace std;
+
+using namespace std;
 
 int BitInputStream::readBit(){
-	if(in.eof()){ //use good or eof? 
+
+	if(!in.good()){
+		cerr << "error occur when read bit from the file" << endl;
 		return -1;
 	}
 
-	if(this->buf_index == 8){
+	if(buf_index == 8){
 		fill();
 	}
 
@@ -16,19 +19,23 @@ int BitInputStream::readBit(){
 }
 
 int BitInputStream::readByte(){
+
+	if(!in.good()){
+		cerr << "error occur when read bit from the file" << endl;
+		return -1;
+	}
+
 	return in.get();
 }
 
 int BitInputStream::readInt(){
-	int toReturn = 0;
-	int first = in.get();
-	int second = in.get();
-	int third = in.get();
-	int fourth = in.get();
 
-	toReturn = first | (second << 8);
-	toReturn = toReturn | (third <<16);
-	toReturn = toReturn | (fourth << 24);
+	if(!in.good()){
+		cerr << "error occur when read bit from the file" << endl;
+		return -1;
+	}
 
-	return toReturn;
+	int placeHolder;
+	in.read((char*) &placeHolder, sizeof(int));
+	
 }

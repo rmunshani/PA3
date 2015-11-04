@@ -12,6 +12,20 @@ private:
   char buf;
   int buf_index;
 
+  char setBit(char b, int bit, int n){
+    char c;
+
+    if(bit == 1){
+      c = b | (bit << (n-1));
+    }
+
+    else{
+      c = b & ~ (1 << (n-1));
+    }
+
+    return c;
+  }
+
 public:
   BitOutputStream(ostream& s) : out(s), buf(0), buf_index(0) { }
 

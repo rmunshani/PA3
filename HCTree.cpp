@@ -1,12 +1,9 @@
 #include "HCTree.hpp"
-<<<<<<< HEAD
 #include "BitOutputStream.hpp"
+#include "BitInputStream.hpp"
 #include <queue>
 #include <stack>
 
-=======
-#include <queue>
->>>>>>> origin/master
 using namespace std;
 
 HCTree::~HCTree(){
@@ -51,16 +48,15 @@ void HCTree::build(const vector<int>& freqs){
 	} 
 }
 
-<<<<<<< HEAD
 
-void encode(byte symbol, BitOutputStream& out) const{
+void HCTree::encode(byte symbol, BitOutputStream& out) const{
 
 	if(root == 0){
 		return;
 	}
 
 	int trace = symbol;
-	HCNode* find = leaves[trace];
+	HCNode* find = this->leaves[trace];
 
 	stack <int> myStack;
 
@@ -79,14 +75,13 @@ void encode(byte symbol, BitOutputStream& out) const{
 	}
 
 	while(!myStack.empty()){
-		in.writeBit(myStack.top());
+		out.writeBit(myStack.top());
 	}
 }
 
-
-
-
 void HCTree::encode(byte symbol, ofstream& out) const{
+
+	BitOutputStream temp(out);
 
 	if(root == 0){
 		return;
@@ -112,11 +107,11 @@ void HCTree::encode(byte symbol, ofstream& out) const{
 	}
 	
 	while(!myStack.empty()){
-		in.writeBit(myStack.top());
+		temp.writeBit(myStack.top());
 	}
 }
 
-int decode(BitInputStream& in) const{
+int HCTree::decode(BitInputStream& in) const{
 
 	HCNode* curr = root;
 	//since every parent has two childrens, check only one of them will be enough 
@@ -129,14 +124,16 @@ int decode(BitInputStream& in) const{
 		}
 	}
 
-	return (char)curr->symbol;
+	return (int)curr->symbol;
 }
 
-int decode(ifstream& in) const{
+int HCTree::decode(ifstream& in) const{
+
+	BitInputStream temp (in);
 	HCNode* curr = root;
 	//since every parent has two childrens, check only one of them will be enough 
 	while(curr->c0 != 0){
-		if(in.readBit() == 0){
+		if(temp.readBit() == 0){
 			curr = curr->c0;
 		}
 		else{
@@ -144,40 +141,6 @@ int decode(ifstream& in) const{
 		}
 	}
 
-	return (char)curr->symbol;
+	return (int)curr->symbol;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-void HCTree::encode(byte symbol, BitOutputStream& out) const{
-
-}
->>>>>>> origin/master

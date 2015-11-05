@@ -1,7 +1,11 @@
 #include "HCTree.hpp"
+#include "HCTree.cpp"
 #include "BitOutputStream.cpp"
+#include "BitOutputStream.hpp"
 #include "BitInputStream.hpp"
+#include "BitInputStream.cpp"
 #include "HCNode.hpp"
+#include "HCNode.cpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -41,15 +45,26 @@ int main(int argc, char** argv){
 	int sum = 0;
 	int index = 0;
 
+
 	while(1){
+
+		if(in.eof()){
+			break;
+		}
 
 		if(!in.good()){
 			break;
 		}
 
-		index = bitInput.readByte();
+		//index = bitInput.readByte();
+
+		if((index = bitInput.readByte()) == EOF){
+			break;
+		}
+
 		myVector[index] = myVector[index] + 1;
-		sum ++;
+		sum++;
+		
 	}
 
 	if(!in.eof()){
@@ -61,6 +76,7 @@ int main(int argc, char** argv){
 
 	cout << "The sum is: " << sum << endl;
 
+
 	//start to build the tree
 	myTree.build(myVector);
 
@@ -71,6 +87,7 @@ int main(int argc, char** argv){
 	//initialize bitoutputstream
 	BitOutputStream bitOutput(out);
 
+
 	if(!out.is_open()){
 
 		cerr << "the output file cannot be opened!" << endl;
@@ -79,26 +96,25 @@ int main(int argc, char** argv){
 		return -1;
 	}
 
-	int writeIndex = 0;
+	unsigned int writeIndex = 0;
 
-	while(1){
+	while(writeIndex < myVector.size()){
 
 		if(!out.good()){
 			break;
 		}
-		bitOutput.writeInt(myVector[writeIndex]);
-		writeIndex ++;
-	}
 
-	if(!out.eof()){
-		cerr << "the writing file terminate the process ealier than expect" << endl;
-		out.clear();
-		out.close();
-		return -1;
+		if(myVector[writeIndex]!=0){
+			bitOutput.writeInt(myVector[writeIndex]);
+		}
+
+		writeIndex ++;
+
 	}
 
 	//reset get pointer to the begining of the file
 	in.seekg(0,ios::beg);
+	cout << in << endl;
 
 	while(1){
 
@@ -108,6 +124,7 @@ int main(int argc, char** argv){
 		}
 
 		char temp = bitInput.readByte();
+		
 		myTree.encode(temp,bitOutput);
 	}
 

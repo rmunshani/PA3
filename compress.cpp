@@ -37,8 +37,8 @@ int main(int argc, char** argv){
 	if(!in.is_open()){
 
 		cerr << "the input file cannot be opened!" << endl;
-		in.clear();
-		in.close();
+		//in.clear();
+		//in.close();
 		return -1;
 	}
 
@@ -69,8 +69,8 @@ int main(int argc, char** argv){
 
 	if(!in.eof()){
 		cerr << "the file reader terminate the process ealier than expect" << endl;
-		in.clear();
-		in.close();
+		//in.clear();
+		//in.close();
 		return -1;
 	}
 
@@ -112,18 +112,28 @@ int main(int argc, char** argv){
 
 	}
 
+	in.clear();
 	//reset get pointer to the begining of the file
 	in.seekg(0,ios::beg);
-	cout << in << endl;
 
-	while(1){
+	//cout << in.tellg() << endl;
+	//cout << in << endl;
+	//bool check = in.fail();
+	//cout << check << endl;
+	//bool check1 = in.bad();
+	//cout << check1 << endl;
+	//bool check2 = in.eof();
+	//cout << check2 << endl;
 
-		if(!in.good()){
-			cout << "end reading file" << endl;
+	char temp;
+
+	while(in.good()){
+
+		if((temp = bitInput.readByte()) == EOF){
 			break;
 		}
 
-		char temp = bitInput.readByte();
+		temp = bitInput.readByte();
 		
 		myTree.encode(temp,bitOutput);
 	}

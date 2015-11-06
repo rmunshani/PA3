@@ -5,7 +5,7 @@
 			return symbol < other.symbol;
 		}
 		else{
-			return count < other.count;
+			return count > other.count;
 		}
 	}
 

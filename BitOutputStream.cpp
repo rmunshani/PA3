@@ -1,11 +1,9 @@
 #include "BitOutputStream.hpp"
+#include <iostream>
+
+using namespace std;
 
 void BitOutputStream::writeBit(int bit){
-
-	if(!out.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return ;
-	}
 
 	//satisfied flush condition 
 	if(buf_index == 8){
@@ -14,6 +12,7 @@ void BitOutputStream::writeBit(int bit){
 
 	//call helper
 	buf = setBit(buf,bit,buf_index+1);
+	//cout << buf << endl;
 	buf_index ++;
 }
 
@@ -21,7 +20,7 @@ void BitOutputStream::flush(){
 
 	if(!out.good()){
 		cerr << "error occur when read bit from the file" << endl;
-		return ;
+		//return ;
 	}
 
 	out.put(buf);
@@ -32,20 +31,10 @@ void BitOutputStream::flush(){
 
 void BitOutputStream::writeByte(int i){
 
-	if(!out.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return ;
-	}
-
 	out.put(i);
 }
 
 void BitOutputStream::writeInt(int i){
-
-	if(!out.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return ;
-	}
 
 	//must cast the pointer to char in order to obey the api 
 	out.write((char*)&i, sizeof(int));

@@ -2,12 +2,13 @@
 
 using namespace std;
 
-int BitInputStream::readBit(){
+void BitInputStream::fill(){
+	buf = in.get();
+	buf_index = 0;
+	//buf =0;
+}
 
-	if(!in.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return -1;
-	}
+int BitInputStream::readBit(){
 
 	if(buf_index == 8){
 		fill();
@@ -15,28 +16,20 @@ int BitInputStream::readBit(){
 
 	int toReturn = bitVal(buf,buf_index + 1);
 	buf_index ++;
+
+
 	return toReturn;
 }
 
 int BitInputStream::readByte(){
-
-	if(!in.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return -1;
-	}
 
 	return in.get();
 }
 
 int BitInputStream::readInt(){
 
-	if(!in.good()){
-		cerr << "error occur when read bit from the file" << endl;
-		return -1;
-	}
-
 	int placeHolder;
 	in.read((char*) &placeHolder, sizeof(int));
 	return placeHolder;
-	
+
 }

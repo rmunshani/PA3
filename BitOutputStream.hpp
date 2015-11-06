@@ -22,7 +22,6 @@ private:
     else{
       c = b & ~ (1 << (n-1));
     }
-
     return c;
   }
 

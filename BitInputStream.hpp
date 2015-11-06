@@ -11,11 +11,7 @@ private:
     char buf;     // the buffer of bits
     int buf_index;     // index to access buf
 
-    //fill the bit when reach 8 
-    void fill(){
-      buf = in.get();
-      buf_index = 0;
-    }
+    //fill the bit when reach 8
 
     char bitVal(char b, int n){
       char c;
@@ -26,7 +22,7 @@ private:
 public:
   // constructor
   BitInputStream(istream& s) : in(s), buf(0), buf_index(8) { }
-
+  void fill();
   // read next bit
   int readBit();
 

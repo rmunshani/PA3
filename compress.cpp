@@ -139,6 +139,7 @@ int main(int argc, char** argv){
 		myTree.encode(temp,bitOutput);
 		i++;
 	}
+	bitOutput.flush();
 
 	cout << "run encode for " << i <<endl;
 
@@ -149,7 +150,6 @@ int main(int argc, char** argv){
 		return -1;
 	}
 
-	//bitOutput.flush();
 
 	double resultsize = out.tellp();
 	double ratio = resultsize/sum;

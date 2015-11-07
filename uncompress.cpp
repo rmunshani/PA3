@@ -76,6 +76,7 @@ int main(int argc, char** argv){
 		bitOutput.writeByte(ch);
 		sum--;
 	}
+	bitInput.fill();
 	cout << "Reach the check point 2" << endl;
 	//flush to make sure nothing in buffer any more
 	bitOutput.flush();

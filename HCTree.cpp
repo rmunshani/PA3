@@ -28,6 +28,7 @@ void HCTree::build(const vector<int>& freqs){
 	}
 
 	if(single == 1){//corner case when there is only one node except the root
+		cout << "Entered" << endl;
 		HCNode* myPointer = pq.top();
 		root = new HCNode(myPointer->count,0,myPointer,0,0);
 		cout << root -> count << endl;
@@ -90,7 +91,7 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const{
 		out.writeBit(myStack.top());
 		myStack.pop();
 	}
-	out.flush();
+	//out.flush();
 }
 
 void HCTree::encode(byte symbol, ofstream& out) const{
@@ -137,7 +138,7 @@ int HCTree::decode(BitInputStream& in) const{
 			curr = curr->c1;
 		}
 	}
-	in.fill();
+	//in.fill();
 	cout << (int)curr->symbol << endl;
 	cout << curr->symbol << endl;
 	return (int)curr->symbol;

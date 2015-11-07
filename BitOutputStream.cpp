@@ -5,7 +5,7 @@ using namespace std;
 
 void BitOutputStream::writeBit(int bit){
 
-	//satisfied flush condition 
+	//satisfied flush condition
 	if(buf_index == 8){
 		flush();
 	}
@@ -24,7 +24,7 @@ void BitOutputStream::flush(){
 	}
 
 	out.put(buf);
-	out.flush();
+	//out.flush();
 	buf_index = 0;
 	buf = 0;
 }
@@ -36,8 +36,6 @@ void BitOutputStream::writeByte(int i){
 
 void BitOutputStream::writeInt(int i){
 
-	//must cast the pointer to char in order to obey the api 
+	//must cast the pointer to char in order to obey the api
 	out.write((char*)&i, sizeof(int));
 }
-
-

@@ -31,7 +31,6 @@ int main(int argc, char** argv){
 	BitInputStream bitInput(in);
 
 	if(!in.is_open()){
-
 		cerr << "the input file cannot be opened!" << endl;
 		in.clear();
 		in.close();
@@ -72,8 +71,6 @@ int main(int argc, char** argv){
 	}
 
 	cout << "The sum is: " << sum << endl;
-
-
 	//start to build the tree
 	myTree.build(myVector);
 
@@ -96,7 +93,7 @@ int main(int argc, char** argv){
 
 	unsigned int writeIndex = 0;
 
-
+	int singleChar = 0;
 	//write header
 	while(writeIndex < myVector.size()){
 
@@ -104,9 +101,10 @@ int main(int argc, char** argv){
 			break;
 		}
 
-		//if(myVector[writeIndex]!=0){
-			bitOutput.writeInt(myVector[writeIndex]);
-		//}
+		if(myVector[writeIndex]!=0){
+			singleChar++;
+		}
+		bitOutput.writeInt(myVector[writeIndex]);
 
 		writeIndex ++;
 	}
@@ -116,14 +114,6 @@ int main(int argc, char** argv){
 	//reset get pointer to the begining of the file
 	in.seekg(0,ios::beg);
 
-	//cout << in.tellg() << endl;
-	//cout << in << endl;
-	//bool check = in.fail();
-	//cout << check << endl;
-	//bool check1 = in.bad();
-	//cout << check1 << endl;
-	//bool check2 = in.eof();
-	//cout << check2 << endl;
 
 	int temp;
 	int i = 0;
@@ -139,7 +129,9 @@ int main(int argc, char** argv){
 		myTree.encode(temp,bitOutput);
 		i++;
 	}
-	bitOutput.flush();
+	if(singleChar != 1){
+		bitOutput.flush();
+	}
 
 	cout << "run encode for " << i <<endl;
 

@@ -16,25 +16,33 @@ void HCTree::build(const vector<int>& freqs){
 
 	unsigned int i = 0;
 	int single = 0;
+	int temp = 0;
 
 	while(i < freqs.size()){
 		if(freqs[i] != 0){
 			HCNode* nodePointer = new HCNode(freqs[i],i,0,0,0);
 			leaves[i] = nodePointer;
 			pq.push(nodePointer);
+			temp = i;
 			single++;
+		cout << single << endl;
 		}
 		i++;
 	}
 
-	if(single == 1){//corner case when there is only one node except the root
-		cout << "Entered" << endl;
+	if(single == 1){
+		root = new HCNode(pq.top()->count,temp,0,0,0);
+		cout << root -> count << endl;
+		pq.pop();
+		return;
+	}
+	/*if(single == 1){//corner case when there is only one node except the root
 		HCNode* myPointer = pq.top();
 		root = new HCNode(myPointer->count,0,myPointer,0,0);
 		cout << root -> count << endl;
 		myPointer ->p = root;
 		pq.pop();
-	}
+	}*/
 
 
 	while(pq.size() > 1){
@@ -56,7 +64,8 @@ void HCTree::build(const vector<int>& freqs){
 	//deal with the last element in the queue or the situation where freqs size == 1
 	if(pq.size() == 1){
 		root = pq.top();
-		cout << root->symbol << endl;
+		pq.pop();
+		//cout << root->symbol << endl;
 		//pq;
 	}
 }
@@ -65,6 +74,9 @@ void HCTree::build(const vector<int>& freqs){
 void HCTree::encode(byte symbol, BitOutputStream& out) const{
 
 	if(root == 0){
+		return;
+	}
+	if(root->c0 == 0){
 		return;
 	}
 
@@ -127,7 +139,10 @@ void HCTree::encode(byte symbol, ofstream& out) const{
 }
 
 int HCTree::decode(BitInputStream& in) const{
-	//cout << "entered" << endl;
+	//the case the root does not have any child;
+	if(root->c0 == 0){
+		return (int)root->symbol;
+	}
 	HCNode* curr = root;
 	//since every parent has two childrens, check only one of them will be enough
 	while(curr->c0 != 0){

@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 	BitInputStream bitInput(in);
 
 	if(!in.is_open()){
-
+		//handle the case when the file cannot be opened
 		cerr << "the input file cannot be opened!" << endl;
 		in.clear();
 		in.close();
@@ -56,7 +56,6 @@ int main(int argc, char** argv){
 	BitOutputStream bitOutput(out);
 
 	if(!out.is_open()){
-
 		cerr << "the output file cannot be opened!" << endl;
 		out.clear();
 		out.close();
@@ -69,17 +68,16 @@ int main(int argc, char** argv){
 	myTree.build(myVector);
 
 	int ch;
-	cout << "Reach the check point 1" << endl;
 	int T = sum;
 	while(sum > 0){
 		ch = myTree.decode(bitInput);  // the number in ACSII table
+		cout << ch << endl;
 		bitOutput.writeByte(ch);
 		sum--;
 	}
 	bitInput.fill();
-	cout << "Reach the check point 2" << endl;
 	//flush to make sure nothing in buffer any more
-	bitOutput.flush();
+	//bitOutput.flush();
 	if(!in.eof()){
 		cerr << "hey dude the file reader terminate the process ealier than expect" << endl;
 		in.clear();
